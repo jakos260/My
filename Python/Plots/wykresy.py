@@ -1,53 +1,31 @@
+"""
+różne wykresy, do wyboru do koloru :)
+
+a na serio to:
+> importowanie excelów,
+> wybieranie z nich wektorów,
+> przedstawianie ich na różnych wykresach
+
+"""
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
 #_______nazwa___pliku__________
 
-df = pd.read_excel(r'mat3.xlsx', sheet_name='Dane')
+df = pd.read_excel(r'data.xlsx', sheet_name='Dane')
 print(df)
-# print(df)
-# print("typ: ", type(df))
 
 #________nazwa___kolumn_________
 
-# Tab = pd.DataFrame(df, columns=['Nr', 'bn', 'Uwe^1', 'Uwev1', 'Uk1', 'bk1', 'bh1', 'Uwy^2', 'Uwyv2', 'Uk2', 'bk2', 'bh2'])
-# T = pd.DataFrame(df, columns=['materiał', 'pH0', 'y0', 'pH30', 'y30', 'pH60', 'y60', 'pH90', 'y90'])
-# Tab = pd.DataFrame(df, columns=['pH0', 'pH30', 'pH60', 'pH90'])
-# # Tab = pd.DataFrame(df, columns=['y0', 'y30', 'y60', 'y90'])
-# Tab.index = df['materiał']
-# Tab = Tab.transpose()
-# Tab1 = pd.DataFrame(df, columns=['xst', '2st', '3st'])
-# Tab2 = pd.DataFrame(df, columns=['X', 'CD'])
-# Tab = pd.DataFrame(df, columns=['f', 'K', 'fi takie'])
-# Tab = pd.DataFrame(df, columns=['r', 'D/t', 'D/t-tlo'])
-# TabCu = pd.DataFrame(df, columns=['cu x', 'cu dt', 'cu a', 'cu b'])
-# TabAl = pd.DataFrame(df, columns=['al x', 'al dt', 'al a', 'al b'])
-# Tab = pd.DataFrame(df, columns=['U','Rx','U2', 'Rx2', 'U3', 'Rx3'])
-# Tab_2 = pd.DataFrame(df, columns=["l","k","t","Ti","Ti^2"])
-# print(Tab)
-# print(Tab_2)
-# Tab = pd.DataFrame(df, columns=['f', 'K', 'fi takie'])
-# Tab = pd.DataFrame(df, columns=['f','K OI', 'K_OI', 'K OIK', 'K_OIK', 'K K', 'K_K'])
-# Tab = pd.DataFrame(df, columns=['r', 'D/t-tlo'])
 Tab = pd.DataFrame(df, columns=['T1', 'dL1', 'Alpha'])
 Tab2 = pd.DataFrame(df, columns=['T2', 'dl/l2', 'alp2'])
 Tab3 = pd.DataFrame(df, columns=['T3', 'dL3', 'alp3'])
 Tab4 = pd.DataFrame(df, columns=['T4', 'dL4', 'alp4'])
 
 
-
-
-
-# x = Tab['Uk1']
-# # x1 = Tab['Uwe^1']
-# # x2 = Tab['Uwev1']
-# x1 = Tab['Uwy^2']
-# x2 = Tab['Uwyv2']
-# y = Tab['Nr']
-
-
-#wykres schodkowy
+#___________wykres schodkowy___________
 # # print(y2)
 # plt.figure(figsize=(15,10))
 # # plt.step(Tab_1['Uwe'], Tab_1['Uwy'], where='post', color = 'b', label = 'Uwy')
