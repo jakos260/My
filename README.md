@@ -3,7 +3,7 @@ zbiór tego co robię gdy mi się nudzi adsfjsdfjas
 
 ### Clone repository on your local machine:
 
-> git clone >https<
+> git clone |https|
 
 ## List of libraries to learn:
 > Numpy, Pandas, Sklearn
@@ -24,7 +24,7 @@ zbiór tego co robię gdy mi się nudzi adsfjsdfjas
 > Git pull
 > 
 > Git push
-> >git push --set-upstream origin {branch_name} - jak jestem w branchu
+> >git push --set-upstream origin |branch_name| - jak jestem w branchu
 > 
 > Git branch
 > 
