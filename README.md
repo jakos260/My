@@ -8,9 +8,8 @@ zbiór tego co robię gdy mi się nudzi adsfjsdfjas
 ## List of libraries to learn:
 > Numpy, Pandas, Sklearn
 
-### Virtual Environment name: BMP_docs
+## Virtual Environment name: BMP_docs
 > python -m venv BMP_docs
->
 
 **Requirements file name** : requirements.txt
 
