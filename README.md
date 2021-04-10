@@ -24,6 +24,7 @@ zbiór tego co robię gdy mi się nudzi adsfjsdfjas
 > Git pull
 > 
 > Git push
+> >git push --set-upstream origin {branch_name} - jak jestem w branchu
 > 
 > Git branch
 > 
