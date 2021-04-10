@@ -1,4 +1,4 @@
-# My
+# Moje repozytorium
 zbiór tego co robię gdy mi się nudzi adsfjsdfjas
 
 ### Clone repository on your local machine:
