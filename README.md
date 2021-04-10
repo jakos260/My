@@ -3,7 +3,7 @@ zbiór tego co robię gdy mi się nudzi adsfjsdfjas
 
 ### Clone repository on your local machine:
 
-> git clone (url/http)
+> git clone >https<
 
 ## List of libraries to learn:
 > Numpy, Pandas, Sklearn
