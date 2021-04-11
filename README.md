@@ -27,6 +27,8 @@ zbiór tego co robię gdy mi się nudzi
 > 
 > git merge <nazwa_galezi> ----> aby zmerdżować naszą gałąź musimy przejść na mastera i dać nazwę gałęzi,
 >                              którą chcemy zmerdżować
+>                              
+>git merge --abort ----> anulowuje merga
 
 ## Short reminder how to create folder / files
 
