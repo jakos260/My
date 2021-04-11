@@ -7,6 +7,7 @@ zbiór tego co robię gdy mi się nudzi
 
 ## Virtual Environment name: My
 > python -m venv My
+> >.\Scripts\activate
 
 **Requirements file name** : rq.txt
 
