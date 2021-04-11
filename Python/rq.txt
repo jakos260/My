@@ -1,0 +1,9 @@
+matplotlib
+numpy
+pandas
+schedule
+scipy
+serial
+sklearn
+time
+torch
