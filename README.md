@@ -1,23 +1,20 @@
 # Moje repozytorium
-zbiór tego co robię gdy mi się nudzi adsfjsdfjas
+zbiór tego co robię gdy mi się nudzi
 
-### Clone repository on your local machine:
+## Clone repository on your local machine:
 
 > git clone |https|
 
-## List of libraries to learn:
-> Numpy, Pandas, Sklearn
+## Virtual Environment name: My
+> python -m venv My
 
-## Virtual Environment name: BMP_docs
-> python -m venv BMP_docs
+**Requirements file name** : rq.txt
 
-**Requirements file name** : requirements.txt
-
-> pip install -r requirements.txt
+> pip install -r rq.txt
 > >
 > > pip install <lib_name>
 > >
-> >pip freeze > requirements.txt
+> >pip freeze > rq.txt
 > >
 
 ## Git most necessary commends
