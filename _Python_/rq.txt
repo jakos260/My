@@ -6,3 +6,4 @@ scipy
 serial
 sklearn
 time
+torch
