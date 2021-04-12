@@ -6,7 +6,7 @@ import pandas as pd
 
 def add_data():
     global df
-    data = pd.DataFrame([sr.serial_read(tekst=0)], columns=['T', 'L', 'H'])
+    data = pd.DataFrame([sr.read_func(tekst=0)], columns=['T', 'L', 'H'])
     df = df.append(data, ignore_index=True)
     # print(df, type(df), df.shape)
     # print(data, type(data), data.shape)

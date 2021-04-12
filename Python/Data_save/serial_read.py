@@ -12,7 +12,7 @@ def boat():
     webbrowser.open_new_tab(url)
 
 
-def serial_read(tekst):
+def read_func(tekst):
     list_values = []
     list_in_floats = []
 
@@ -48,6 +48,6 @@ def serial_read(tekst):
 
 
 
-print(serial_read(tekst=0))
+print(read_func(tekst=0))
 
 
