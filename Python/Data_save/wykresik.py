@@ -12,9 +12,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-df = pd.read_excel(r'data/temp_rekord.xlsx', sheet_name='Dane')
+df = pd.read_excel(r'data/temp.xlsx', sheet_name='Dane')
 
-ticks = np.arange(0,1900,200)
+ticks = np.arange(0,len(df),int(len(df)/10))
 
 T = df['T']
 L = df['L']
@@ -23,7 +23,7 @@ H = df['H']
 fig, ax1 = plt.subplots(figsize = (10,6))
 
 color = 'tab:red'
-ax1.set_xlabel('czas')
+ax1.set_xlabel('godzina')
 ax1.set_ylabel('T [˚C]', color=color)
 ax1.plot(H, T, color=color, label = 'T')
 ax1.tick_params(axis='y', which='major', labelcolor=color)
