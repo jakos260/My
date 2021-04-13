@@ -15,7 +15,7 @@ def add_data():
 
 
 def to_excel():
-    df.to_excel('temp.xlsx', sheet_name='Dane')
+    df.to_excel('data/temp.xlsx', sheet_name='Dane')
     print('________data saved_________')
 
 def stop():

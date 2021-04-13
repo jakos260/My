@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-df = pd.read_excel(r'temp_rekord.xlsx', sheet_name='Dane')
+df = pd.read_excel(r'data/temp_rekord.xlsx', sheet_name='Dane')
 
 ticks = np.arange(0,1900,200)
 
