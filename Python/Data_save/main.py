@@ -9,10 +9,8 @@ def add_data():
     global miss_value
 
     try:        
-        data = pd.DataFrame([sr.read_func(tekst=0)], columns=['T', 'L', 'H'])
-        df = df.append(data, ignore_index=True)
-        # print(df, type(df), df.shape)
-        # print(data, type(data), data.shape)
+        data = pd.DataFrame([sr.read_func(tekst=0)], columns=['T','L','H','M','S'])
+        df = df.append(data, ignore_index=True) # skomentuj żeby nie ładować do pamieci
         print(data)
 
     except ValueError:
@@ -34,13 +32,13 @@ def stop():
 # ___________________main__________________________
 
 one = True
-df = pd.DataFrame(columns=['T','L','H'])
+df = pd.DataFrame(columns=['T','L','H','M','S'])
 miss_value = 0
 
       
-schedule.every(20).seconds.do(add_data)    
-schedule.every(100).seconds.do(to_excel)
-schedule.every().day.at('19:55').do(stop)
+schedule.every(1).seconds.do(add_data)    
+schedule.every(10).seconds.do(to_excel) # skomentuj żeby nie ładować do pamieci
+schedule.every().day.at('00:24').do(stop)
 # schedule.every().day.at('21:37').do(sr.boat)
 
 

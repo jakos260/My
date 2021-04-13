@@ -37,7 +37,9 @@ def read_func(tekst):
     if tekst:
         print(f'{act_time} => odczyt T : {list_in_floats}')
     else:
-        list_in_floats.append(act_time)
+        list_in_floats.append(now.hour)
+        list_in_floats.append(now.minute)
+        list_in_floats.append(now.second)
         return list_in_floats
 
     arduino_data = 0
