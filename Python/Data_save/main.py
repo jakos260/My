@@ -21,7 +21,7 @@ def add_data():
 
 def to_excel():
     df.to_excel('data/temp.xlsx', sheet_name='Dane')
-    print('________data saved_________|', miss_value, 'missing values |', len(df),'samples |')
+    print('________data saved_________|', miss_value, 'missing values |', len(df),'samples colected |')
 
 def stop():
     to_excel()
