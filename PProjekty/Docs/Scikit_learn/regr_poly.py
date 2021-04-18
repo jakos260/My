@@ -13,6 +13,7 @@ import pandas as pd
 from sklearn import datasets
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
 
 # Load the diabetes dataset
 x, y = datasets.load_diabetes(return_X_y=True)
@@ -31,19 +32,20 @@ lin_reg = LinearRegression()
 lin_reg.fit(x_train, y_train)
 
 # nasz model wielomianowy
-poly_model =  PolynomialFeatures(degree = 2) #degree - stopień wielomianu
+poly_model =  PolynomialFeatures(degree = 10) #degree - stopień wielomianu
 x_poly = poly_model.fit_transform(x_train)
 
 lin_reg_2 = LinearRegression()
 lin_reg_2.fit(x_poly, y_train)
 
-fig, ax = plt.subplots(nrows=1, ncols=2, sharey='row')
 
-ax[0,0].scatter(x_test, y_test, 'r')
-# ax[0,0].plot(x_test, lin_reg.predict(x_test), 'b')
-
-# ax[0,1].scatter(x_test, y_test, 'r')
-# ax[0,1].plot(x_test, lin_reg_2.predict(x_test))
-
+fig, (ax1, ax2) = plt.subplots(2)
 fig.suptitle('regresja wielomianowa')
+
+ax1.scatter(x_test, y_test, color='r')
+ax1.plot(x_test, lin_reg.predict(x_test), 'b')
+
+ax2.scatter(x_test, y_test, color='r')
+ax2.plot(x_test, lin_reg_2.predict(poly_model.fit_transform(x_test)), color='b')
+
 plt.show()
