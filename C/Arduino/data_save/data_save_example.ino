@@ -8,7 +8,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 float t;
 
-int l_sensor = A1; ///fotorezystor A5
+int l_sensor = A1; ///fotorezystor A1
 int l;
 
 void setup(void)
