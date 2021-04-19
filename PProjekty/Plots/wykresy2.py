@@ -1,10 +1,20 @@
 import matplotlib.pyplot as plt
 from openpyxl import load_workbook
+import numpy as np
 
-wb = load_workbook('mat3.xlsx') #___nazwa pliku___
+def sk(x):
+    sum=0
+    for i in range(len(x)):
+        sum += x[i]**2
+    return np.sqrt(sum)/len(x)
 
-sheet = wb.active
-# sheet = wb.get_sheet_by_name('Dane') #___nazwa arkusza___
+data = np.loadtxt('drgania.txt')
+means = data.mean(axis = 0)
 
-# wb.save('excel_file.xlsx')
-print(wb)
+x = data.T[2]
+y = data.T[3]
+z = data.T[4]
+
+print("sk X: ", sk(x))
+print("sk Y: ", sk(y))
+print("sk Z: ", sk(z))
