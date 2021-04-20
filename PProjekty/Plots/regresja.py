@@ -1,7 +1,12 @@
 import numpy as np
 from sklearn import datasets, linear_model
+import pandas as pd
 
-#tu zaimportuj dane
+df = pd.read_excel(r'dane.xlsx', sheet_name='Dane')
+print(df)
+
+
+Tab = pd.DataFrame(df, columns=['T', 'L', 'H'])
 
 # Create linear regression object
 regr = linear_model.LinearRegression()
