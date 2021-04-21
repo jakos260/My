@@ -3,6 +3,9 @@ ldr.py
 Display analog data from Arduino using Python (matplotlib)
 Author: Mahesh Venkitachalam
 Website: electronut.in
+_______________________________________________________
+format wyjściowy danych: [data] [data]
+wywołanie: python main_plot.py --port 'port na którym masz urządzenie'
 """
 
 import sys, serial, argparse
@@ -79,14 +82,6 @@ def main():
   analogPlot = AnalogPlot(strPort, 100)
 
   print('plotting data...')
-
-  # set up animation
-#   fig = plt.figure(figsize = (12,7))
-
-#   ax0 = plt.axes(xlim=(0, 100), ylim=(0, 30))
-#   a0, = ax0.plot([], [], 'r')
-#   ax1 = plt.axes(xlim=(0, 100), ylim=(0, 1023))
-#   a1, = ax1.plot([], [], 'b')
 
 
   fig, ax1 = plt.subplots( figsize = (12,7))

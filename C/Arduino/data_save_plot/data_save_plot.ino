@@ -3,7 +3,7 @@
 #include <time.h>
 #include "Arduino.h"
 
-#define ONE_WIRE_BUS 5 // czujnik temperatury D5, patrzeć na schemat -> R 1K2!!!
+#define ONE_WIRE_BUS 5; // czujnik temperatury D5, patrzeć na schemat -> R 1K2!!!
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 float t;
@@ -16,8 +16,7 @@ void setup(void)
   
   Serial.begin(9600);
   sensors.begin();
-  pinMode(2, OUTPUT);   /// LED D2
-  
+
 }
  
 void loop(void)
@@ -32,8 +31,6 @@ void loop(void)
   Serial.print(l);
   Serial.print("\n");
   
-  if (t > 22) digitalWrite (2, HIGH);
-  else digitalWrite (2, LOW);
   
   delay(50);
 }

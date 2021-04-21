@@ -27,7 +27,7 @@ void loop(void)
   light = analogRead(l_sensor);
   //Serial.print("\nTEMP");
   Serial.print(temp); 
-  Serial.print('x');
+  Serial.print(' ');
   Serial.println(light);
   
   if (temp > 23) digitalWrite (2, HIGH);
