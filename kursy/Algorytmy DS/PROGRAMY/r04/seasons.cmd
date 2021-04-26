@@ -1,1 +1,0 @@
-python .\random_forest.py chess_with_seasons.csv 4 2 > chess_with_seasons.out

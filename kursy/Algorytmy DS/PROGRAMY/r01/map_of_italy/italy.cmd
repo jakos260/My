@@ -1,1 +1,0 @@
-python .\knn_to_pgm.py italy_100partial.pgm italy_100completed_3.pgm 3

@@ -1,1 +1,0 @@
-python .\construct_decision_tree.py chess_with_seasons.csv 1 > seasons.out

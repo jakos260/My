@@ -1,1 +1,0 @@
-python .\naive_bayes.py chess_reduced.csv 
