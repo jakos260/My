@@ -1,0 +1,1 @@
+for %%i in (celsius_fahrenheit.py, cloud_storage.py, fahrenheit_celsius.py, flight_time.py, speed_distance.py, weight_prediction.py) do python %%i

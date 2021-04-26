@@ -1,0 +1,15 @@
+Konstruowanie drzewa decyzyjnego Liczba elementów danych - 6
+[['zimno', 'brak', 'tak'], ['ciep\xc5\x82o', 'brak', 'nie'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'brak', 'nie'], ['ciep\xc5\x82o', 'rz\xc4\x99sisty', 'nie'], ['ciep\xc5\x82o', 'brak', 'tak']]
+
+***Drzewo decyzyjne***
+Korzeń
+├── [temperatura=zimno]
+│   ├── [deszcz=brak]
+│   │   └── [zakupy=tak]
+│   └── [deszcz=rzęsisty]
+│       └── [zakupy=tak]
+└── [temperatura=ciepło]
+    ├── [deszcz=brak]
+    │   └── [zakupy=nie]
+    └── [deszcz=rzęsisty]
+        └── [zakupy=nie]

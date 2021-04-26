@@ -1,0 +1,1 @@
+python .\random_forest.py chess.csv 4 2 > chess.out

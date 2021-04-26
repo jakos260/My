@@ -1,0 +1,349 @@
+Mamy M=4 zmiennych służących do klasyfikowania cech. Zalecaną wartością m jest m=min(M,math.ceil(2*math.sqrt(M)))=min(M,math.ceil(2*math.sqrt(4)))=4.
+We are given the following features:
+[['zimno', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 'silny', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+ When constructing a random decision tree as a part of a random forest, we will choose only a subset out of them in a random way with the replacement.
+
+*** Konstruowanie lasu losowego ***
+Konstruowanie lasu losowego składającego się z 4 losowych drzew decyzyjnych.
+
+Budowanie losowego drzewa decyzyjnego nr 0:
+Dane wejściowe  obejmują 10 cech, spośród których losujemy ze zwracaniem 10 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['zimno', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną wiatr partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla wiatr=brak: [['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Partycja dla wiatr=silny: [['zimno', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Partycja dla wiatr=słaby: [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [wiatr=brak] do węzła [korzeń]. Ta gałąź klasyfikuje 4 atrybut(ów): [['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=brak].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=brak]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=brak].
+
+Dodajemy węzeł potomny [wiatr=silny] do węzła [korzeń]. Ta gałąź klasyfikuje 3 atrybut(ów): [['zimno', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [wiatr=silny].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=silny]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [wiatr=silny]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [wiatr=silny]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=silny].
+
+Dodajemy węzeł potomny [wiatr=słaby] do węzła [korzeń]. Ta gałąź klasyfikuje 3 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=słaby].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=słaby]. utworzono następujące partycje:
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [wiatr=słaby]. Ta gałąź klasyfikuje 2 atrybut(ów): [['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [wiatr=słaby]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=słaby].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Budowanie losowego drzewa decyzyjnego nr 1:
+Dane wejściowe  obejmują 10 cech, spośród których losujemy ze zwracaniem 10 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['gor\xc4\x85co', 'silny', 'pochmurno', 'tak'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie']]
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 'silny', 'pochmurno', 'tak'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [korzeń]. Ta gałąź klasyfikuje 3 atrybut(ów): [['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['wiatr', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość słaby. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [korzeń]. Ta gałąź klasyfikuje 3 atrybut(ów): [['gor\xc4\x85co', 'silny', 'pochmurno', 'tak'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['wiatr', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną wiatr partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [temperatura=gorąco]. utworzono następujące partycje:
+Partycja dla wiatr=brak: [['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Partycja dla wiatr=silny: [['gor\xc4\x85co', 'silny', 'pochmurno', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [wiatr=brak] do węzła [temperatura=gorąco]. Ta gałąź klasyfikuje 2 atrybut(ów): [['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Dodajemy węzły potomne do węzła [wiatr=brak].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [wiatr=silny] do węzła [temperatura=gorąco]. Ta gałąź klasyfikuje 1 atrybut(ów): [['gor\xc4\x85co', 'silny', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=silny].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [temperatura=gorąco].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [korzeń]. Ta gałąź klasyfikuje 4 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['wiatr', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną wiatr partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [temperatura=ciepło]. utworzono następujące partycje:
+Partycja dla wiatr=brak: [['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Partycja dla wiatr=słaby: [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [wiatr=brak] do węzła [temperatura=ciepło]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=brak].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną słońce partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=brak]. utworzono następujące partycje:
+Partycja dla słońce=pochmurno: [['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Partycja dla słońce=słonecznie: [['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [słońce=pochmurno] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Nie dysponujemy żadnym atrybutem, na podstawie którego moglibyśmy dokonać podziału, dodajemy zatem liść do bieżącej gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [słońce=słonecznie] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'brak', 's\xc5\x82onecznie', 'tak']]
+Nie dysponujemy żadnym atrybutem, na podstawie którego moglibyśmy dokonać podziału, dodajemy zatem liść do bieżącej gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=brak].
+
+Dodajemy węzeł potomny [wiatr=słaby] do węzła [temperatura=ciepło]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=słaby].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [temperatura=ciepło].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Budowanie losowego drzewa decyzyjnego nr 2:
+Dane wejściowe  obejmują 10 cech, spośród których losujemy ze zwracaniem 10 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną wiatr partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla wiatr=brak: [['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Partycja dla wiatr=silny: [['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie']]
+Partycja dla wiatr=słaby: [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [wiatr=brak] do węzła [korzeń]. Ta gałąź klasyfikuje 4 atrybut(ów): [['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Dodajemy węzły potomne do węzła [wiatr=brak].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=brak]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'brak', 's\xc5\x82onecznie', 'tak']]
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 1 atrybut(ów): [['zimno', 'brak', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 2 atrybut(ów): [['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie'], ['gor\xc4\x85co', 'brak', 's\xc5\x82onecznie', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=brak].
+
+Dodajemy węzeł potomny [wiatr=silny] do węzła [korzeń]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [wiatr=silny].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość ciepło. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [wiatr=słaby] do węzła [korzeń]. Ta gałąź klasyfikuje 5 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['zimno', 's\xc5\x82aby', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [wiatr=słaby].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=słaby]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 's\xc5\x82aby', 'pochmurno', 'nie']]
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [wiatr=słaby]. Ta gałąź klasyfikuje 1 atrybut(ów): [['zimno', 's\xc5\x82aby', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [wiatr=słaby]. Ta gałąź klasyfikuje 1 atrybut(ów): [['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [wiatr=słaby]. Ta gałąź klasyfikuje 3 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=słaby].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Budowanie losowego drzewa decyzyjnego nr 3:
+Dane wejściowe  obejmują 10 cech, spośród których losujemy ze zwracaniem 10 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną wiatr partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla wiatr=brak: [['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Partycja dla wiatr=silny: [['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Partycja dla wiatr=słaby: [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [wiatr=brak] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'brak', 's\xc5\x82onecznie', 'tak'], ['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=brak].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=brak]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'brak', 's\xc5\x82onecznie', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 1 atrybut(ów): [['zimno', 'brak', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [wiatr=brak]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=brak].
+
+Dodajemy węzeł potomny [wiatr=silny] do węzła [korzeń]. Ta gałąź klasyfikuje 6 atrybut(ów): [['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [wiatr=silny].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=silny]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [wiatr=silny]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'silny', 'pochmurno', 'nie'], ['zimno', 'silny', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [wiatr=silny]. Ta gałąź klasyfikuje 4 atrybut(ów): [['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie'], ['ciep\xc5\x82o', 'silny', 'pochmurno', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=silny].
+
+Dodajemy węzeł potomny [wiatr=słaby] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=słaby].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 's\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [wiatr=słaby]. utworzono następujące partycje:
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [wiatr=słaby]. Ta gałąź klasyfikuje 1 atrybut(ów): [['gor\xc4\x85co', 's\xc5\x82aby', 'pochmurno', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość pochmurno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [wiatr=słaby]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 's\xc5\x82onecznie', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['s\xc5\x82o\xc5\x84ce']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna słońce. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej słońce wszystkie dostępne atrybuty mają tę samą wartość słonecznie. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [wiatr=słaby].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Zakończono konstruowanie lasu losowego składającego się z 4 losowych drzew decyzyjnych.
+
+*** Graf lasu losowego ***
+
+Drzewo nr 0:
+Korzeń
+├── [wiatr=brak]
+│   ├── [temperatura=zimno]
+│   │   └── [gramy=tak]
+│   └── [temperatura=ciepło]
+│       └── [gramy=tak]
+├── [wiatr=silny]
+│   ├── [temperatura=zimno]
+│   │   └── [gramy=nie]
+│   └── [temperatura=ciepło]
+│       └── [gramy=nie]
+└── [wiatr=słaby]
+    ├── [temperatura=gorąco]
+    │   └── [gramy=tak]
+    └── [temperatura=ciepło]
+        └── [gramy=tak]
+
+Drzewo nr 1:
+Korzeń
+├── [temperatura=zimno]
+│   └── [gramy=nie]
+├── [temperatura=gorąco]
+│   ├── [wiatr=brak]
+│   │   └── [gramy=nie]
+│   └── [wiatr=silny]
+│       └── [gramy=tak]
+└── [temperatura=ciepło]
+    ├── [wiatr=brak]
+    │   ├── [słońce=pochmurno]
+    │   │   └── [gramy=tak]
+    │   └── [słońce=słonecznie]
+    │       └── [gramy=tak]
+    └── [wiatr=słaby]
+        └── [gramy=tak]
+
+Drzewo nr 2:
+Korzeń
+├── [wiatr=brak]
+│   ├── [temperatura=zimno]
+│   │   └── [gramy=tak]
+│   ├── [temperatura=gorąco]
+│   │   └── [gramy=nie]
+│   └── [temperatura=ciepło]
+│       └── [gramy=tak]
+├── [wiatr=silny]
+│   └── [gramy=nie]
+└── [wiatr=słaby]
+    ├── [temperatura=zimno]
+    │   └── [gramy=nie]
+    ├── [temperatura=gorąco]
+    │   └── [gramy=tak]
+    └── [temperatura=ciepło]
+        └── [gramy=tak]
+
+Drzewo nr 3:
+Korzeń
+├── [wiatr=brak]
+│   ├── [temperatura=zimno]
+│   │   └── [gramy=tak]
+│   └── [temperatura=ciepło]
+│       └── [gramy=tak]
+├── [wiatr=silny]
+│   ├── [temperatura=zimno]
+│   │   └── [gramy=nie]
+│   └── [temperatura=ciepło]
+│       └── [gramy=nie]
+└── [wiatr=słaby]
+    ├── [temperatura=gorąco]
+    │   └── [gramy=tak]
+    └── [temperatura=ciepło]
+        └── [gramy=tak]
+
+Liczba drzew w lesie losowym: 4.
+Makymalna liczba zmiennych uwzglednianych w węźle: 4.
+
+ *** Klasyfikacja ***
+
+
+Cecha: ['ciep\xc5\x82o', 'silny', 's\xc5\x82onecznie', '?']
+Drzewo nr 0 głosuje na klasę 'nie'
+Drzewo nr 1 wstrzymuje się od głosu
+Drzewo nr 2 głosuje na klasę 'nie'
+Drzewo nr 3 głosuje na klasę 'nie'
+Klasa o największej liczbie głosów to 'nie',
+zatem cecha ['ciep\xc5\x82o', 'silny', 's\xc5\x82onecznie', '?'] zostaje zaliczona przez las losowy do klasy 'nie'.

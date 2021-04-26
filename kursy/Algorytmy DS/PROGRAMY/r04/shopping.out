@@ -1,0 +1,145 @@
+Mamy M=3 zmiennych służących do klasyfikowania cech. Zalecaną wartością m jest m=min(M,math.ceil(2*math.sqrt(M)))=min(M,math.ceil(2*math.sqrt(3)))=3.
+We are given the following features:
+[['zimno', 'brak', 'tak'], ['ciep\xc5\x82o', 'brak', 'nie'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'brak', 'nie'], ['ciep\xc5\x82o', 'rz\xc4\x99sisty', 'nie'], ['ciep\xc5\x82o', 'brak', 'tak']]
+ When constructing a random decision tree as a part of a random forest, we will choose only a subset out of them in a random way with the replacement.
+
+*** Konstruowanie lasu losowego ***
+Konstruowanie lasu losowego składającego się z 4 losowych drzew decyzyjnych.
+
+Budowanie losowego drzewa decyzyjnego nr 0:
+Dane wejściowe  obejmują 6 cech, spośród których losujemy ze zwracaniem 6 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [korzeń]. Ta gałąź klasyfikuje 4 atrybut(ów): [['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna deszcz. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną deszcz partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [temperatura=zimno]. utworzono następujące partycje:
+Partycja dla deszcz=brak: [['zimno', 'brak', 'tak']]
+Partycja dla deszcz=rzęsisty: [['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [deszcz=brak] do węzła [temperatura=zimno]. Ta gałąź klasyfikuje 1 atrybut(ów): [['zimno', 'brak', 'tak']]
+Nie dysponujemy żadnym atrybutem, na podstawie którego moglibyśmy dokonać podziału, dodajemy zatem liść do bieżącej gałęzi. Dodajemy liść [zakupy=tak].
+
+Dodajemy węzeł potomny [deszcz=rzęsisty] do węzła [temperatura=zimno]. Ta gałąź klasyfikuje 3 atrybut(ów): [['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Nie dysponujemy żadnym atrybutem, na podstawie którego moglibyśmy dokonać podziału, dodajemy zatem liść do bieżącej gałęzi. Dodajemy liść [zakupy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [temperatura=zimno].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna deszcz. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej deszcz wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [zakupy=nie].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Budowanie losowego drzewa decyzyjnego nr 1:
+Dane wejściowe  obejmują 6 cech, spośród których losujemy ze zwracaniem 6 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['ciep\xc5\x82o', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['ciep\xc5\x82o', 'brak', 'tak'], ['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'nie']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'rz\xc4\x99sisty', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'brak', 'tak'], ['ciep\xc5\x82o', 'brak', 'tak'], ['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'nie']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [korzeń]. Ta gałąź klasyfikuje 1 atrybut(ów): [['zimno', 'rz\xc4\x99sisty', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna deszcz. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej deszcz wszystkie dostępne atrybuty mają tę samą wartość rzęsisty. Dołączamy więc liść do gałęzi. Dodajemy liść [zakupy=tak].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [korzeń]. Ta gałąź klasyfikuje 5 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'tak'], ['ciep\xc5\x82o', 'brak', 'tak'], ['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna deszcz. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej deszcz wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [zakupy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Budowanie losowego drzewa decyzyjnego nr 2:
+Dane wejściowe  obejmują 6 cech, spośród których losujemy ze zwracaniem 6 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['zimno', 'brak', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'brak', 'tak']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość zimno. Dołączamy więc liść do gałęzi. Dodajemy liść [zakupy=tak].
+
+Budowanie losowego drzewa decyzyjnego nr 3:
+Dane wejściowe  obejmują 6 cech, spośród których losujemy ze zwracaniem 6 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'brak', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [korzeń]. Ta gałąź klasyfikuje 4 atrybut(ów): [['zimno', 'brak', 'tak'], ['zimno', 'brak', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna deszcz. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną deszcz partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [temperatura=zimno]. utworzono następujące partycje:
+Partycja dla deszcz=brak: [['zimno', 'brak', 'tak'], ['zimno', 'brak', 'tak']]
+Partycja dla deszcz=rzęsisty: [['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [deszcz=brak] do węzła [temperatura=zimno]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'brak', 'tak'], ['zimno', 'brak', 'tak']]
+Nie dysponujemy żadnym atrybutem, na podstawie którego moglibyśmy dokonać podziału, dodajemy zatem liść do bieżącej gałęzi. Dodajemy liść [zakupy=tak].
+
+Dodajemy węzeł potomny [deszcz=rzęsisty] do węzła [temperatura=zimno]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'rz\xc4\x99sisty', 'tak'], ['zimno', 'rz\xc4\x99sisty', 'tak']]
+Nie dysponujemy żadnym atrybutem, na podstawie którego moglibyśmy dokonać podziału, dodajemy zatem liść do bieżącej gałęzi. Dodajemy liść [zakupy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [temperatura=zimno].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'nie'], ['ciep\xc5\x82o', 'brak', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['deszcz']. Ponieważ jest ich mniej niż wszkazuje parametr m=3, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna deszcz. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej deszcz wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [zakupy=nie].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Zakończono konstruowanie lasu losowego składającego się z 4 losowych drzew decyzyjnych.
+
+*** Graf lasu losowego ***
+
+Drzewo nr 0:
+Korzeń
+├── [temperatura=zimno]
+│   ├── [deszcz=brak]
+│   │   └── [zakupy=tak]
+│   └── [deszcz=rzęsisty]
+│       └── [zakupy=tak]
+└── [temperatura=ciepło]
+    └── [zakupy=nie]
+
+Drzewo nr 1:
+Korzeń
+├── [temperatura=zimno]
+│   └── [zakupy=tak]
+└── [temperatura=ciepło]
+    └── [zakupy=tak]
+
+Drzewo nr 2:
+Korzeń
+└── [zakupy=tak]
+
+Drzewo nr 3:
+Korzeń
+├── [temperatura=zimno]
+│   ├── [deszcz=brak]
+│   │   └── [zakupy=tak]
+│   └── [deszcz=rzęsisty]
+│       └── [zakupy=tak]
+└── [temperatura=ciepło]
+    └── [zakupy=nie]
+
+Liczba drzew w lesie losowym: 4.
+Makymalna liczba zmiennych uwzglednianych w węźle: 3.
+
+ *** Klasyfikacja ***
+
+
+Cecha: ['zimno', 'brak', '?']
+Drzewo nr 0 głosuje na klasę 'tak'
+Drzewo nr 1 głosuje na klasę 'tak'
+Drzewo nr 2 głosuje na klasę 'tak'
+Drzewo nr 3 głosuje na klasę 'tak'
+Klasa o największej liczbie głosów to 'tak',
+zatem cecha ['zimno', 'brak', '?'] zostaje zaliczona przez las losowy do klasy 'tak'.

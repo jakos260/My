@@ -1,0 +1,1 @@
+python .\construct_decision_tree.py swim.csv 1  > swim.out
