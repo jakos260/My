@@ -28,31 +28,59 @@ class Test:
     def __init__(self):
         self.publiczne, self._chronione, self.__prywatne = 1, 2, 3
 
+class Licznik:
+    ile = 0 # pole statyczne (stworzone poza kostruktorem)
+    def __init__(self):
+        Licznik.ile += 1
+        self.ktory = Licznik.ile
+        print(f'to jest obiekt nr{Licznik.ile}')
+        
+    def __del__(self):
+        Licznik.ile -= 1
+        print(f'usunięto obiekt {self.ktory}, pozostało jeszcze {Licznik.ile} obiektów')
+
+    @staticmethod # dekorator (tak oznaczamy metodę statyczną po prostu)
+    def policz(): # metoda statyczna
+        return Licznik.ile
 
 def main():
-    # konstruujemy obiekty
-    Mars = planeta('Mars', True, 687, 1.5)
-    Jowisz = planeta('Jowisz', False, 4333, 5.2)
-    Neptun = planeta('Neptun', False, 60265, 30)
+    # # konstruujemy obiekty
+    # Mars = planeta('Mars', True, 687, 1.5)
+    # Jowisz = planeta('Jowisz', False, 4333, 5.2)
+    # Neptun = planeta('Neptun', False, 60265, 30)
 
-    # wykonujemy ich metody (funkcje)
-    Mars.info()
-    Mars.compare()
-    Jowisz.all()
-    Neptun.all()
+    # # wykonujemy ich metody (funkcje)
+    # Mars.info()
+    # Mars.compare()
+    # Jowisz.all()
+    # Neptun.all()
 
-    # możemy zmienić zmienne obiektu
-    Mars.nazwa = 'Wenus'
-    Mars.inner = True
-    Mars.rok = 243
-    Mars.R = 0.7
+    # # możemy zmienić zmienne obiektu
+    # Mars.nazwa = 'Wenus'
+    # Mars.inner = True
+    # Mars.rok = 243
+    # Mars.R = 0.7
 
-    Mars.all()
+    # Mars.all()
 
-    test = Test()
-    print('publiczne', test.publiczne) # publiczny element klasy test
-    print('_chronione', test._chronione) # chroniony element, nie wyświetla się w podpowiedziach, musimy wpisać _
-    print('__prywatne', test._Test__prywatne) # nie widoczne wgl, odwołanie: _nazwaklasy__nazwaelementu
+    # test = Test()
+    # print('publiczne', test.publiczne) # publiczny element klasy test
+    # print('_chronione', test._chronione) # chroniony element, nie wyświetla się w podpowiedziach, musimy wpisać _nazwaelementu
+    # print('__prywatne', test._Test__prywatne) # nie widoczne wgl, odwołanie: _nazwaklasy__nazwaelementu
+
+    # konstruowanie obiektów
+    a = Licznik()
+    b = Licznik()
+    c = Licznik()
+    # zwracanie numerów obiektów
+    print(f"a to obiekt nr {a.ktory}") # obiekt
+    print(f"b to obiekt nr {b.ktory}")
+    print(f"c to obiekt nr {c.ktory}")
+    # usuwanie obiektów
+    print(f"Liczba obiektow to: {Licznik.policz()}") # pole statyczne (odwołujemy się nie przez obiekt, a przez nazwę klasy)
+    a = None
+    b = None
+    print(f"Liczba obiektow to: {Licznik.policz()}")
 
 if __name__ == "__main__":
     main()
