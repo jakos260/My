@@ -1,20 +1,28 @@
 import matplotlib.pyplot as plt
-from openpyxl import load_workbook
+from sklearn import datasets, linear_model
 import numpy as np
+import pandas as pd
 
-def sk(x):
-    sum=0
-    for i in range(len(x)):
-        sum += x[i]**2
-    return np.sqrt(sum)/len(x)
+df = pd.read_excel(r'FL.xlsx', sheet_name='Arkusz2')
+print(df)
+x = np.array(df['Q KI'])
+y = np.array(df['I0I'])
+print(x, x.shape)
+print(y, y.shape)
+x_ = np.linspace(0, 0.16, 17)
 
-data = np.loadtxt('drgania.txt')
-means = data.mean(axis = 0)
+# ____________regresja________________
+regr = linear_model.LinearRegression()
+regr.fit(x.reshape(-1,1), y)
+y_pred = regr.predict(x_.reshape(-1,1))
 
-x = data.T[2]
-y = data.T[3]
-z = data.T[4]
+plt.figure(figsize=(12,6))
+plt.scatter(x, y, color = 'k', label='I0/I')
+plt.plot(x_, y_pred, 'b', label='dopasowanie liniowe I0/I')
+plt.xlabel('[Q] KI', fontsize = 12)
+plt.ylabel('I0/I')
+plt.legend()
+plt.grid()
+plt.show()
 
-print("sk X: ", sk(x))
-print("sk Y: ", sk(y))
-print("sk Z: ", sk(z))
+print('współczynniki: \n', regr.coef_)

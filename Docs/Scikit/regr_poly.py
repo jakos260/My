@@ -20,8 +20,8 @@ from sklearn.metrics import mean_squared_error, r2_score
 boston = datasets.load_boston()
 df = pd.DataFrame(boston['data'], columns=boston['feature_names'])
 df = pd.concat([df, pd.Series(boston['target'], name='MEDV')], axis=1)
-X = df.iloc[:, [4,7]].values
-y = df.iloc[:, 4].values
+X = np.array(df['DIS'])
+y = np.array(df['NOX'])
 print(X.shape,'\n',y.shape)
 
 from sklearn.model_selection import train_test_split 
@@ -30,8 +30,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # print(x_test, '\n____', y_test)
 # ____________regresja liniowa dla porównania___________
 lin_reg = LinearRegression()
-lin_reg.fit(X, y)
-y_pred_lin = lin_reg.predict(X)
+lin_reg.fit(X.reshape(-1,1), y)
+y_pred_lin = lin_reg.predict(X.reshape(-1,1))
 
 # __________nasz model wielomianowy____________
 
