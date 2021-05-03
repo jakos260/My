@@ -26,35 +26,46 @@ def signal2data():
     global l_err
     print('_____________________________')
     print('______przetwarzanie..._______')
-    data_df = pd.DataFrame(columns=['ms', 'mV'])
+    data_df = pd.DataFrame(columns=['ms', 'Y'])
     for i in range(len(signal_df)-1):
         if signal_df['t'][i+1] - signal_df['t'][i] > T:
-            l_err += (signal_df['t'][i+1] - signal_df['t'][i])/T # zliczy ile próbek brakuje między ostatnim i przedostatnim zapisem
-
+            l_err += (signal_df['t'][i+1] - signal_df['t'][i])/(T) -1 # zliczy ile próbek brakuje między ostatnim i przedostatnim zapisem
+            
     # t0 = min(signal_df['t'])
     t0 = signal_df['t'][0]
     data_df['ms'] = signal_df['t'] - t0
-    data_df['mV'] = signal_df['U'] * 0.444326 - 300
+    data_df['Y'] = signal_df['U']
     data_df = data_df.set_index('ms')
         
     return data_df
 
-
 def to_excel():
-    name = 'data\EKG_' + str(datetime.date.today()) + '.xlsx'
+    name = name()
     global signal_df
     data_df = signal2data()
     signal_df['value errors num'] = pd.DataFrame([v_err])
     signal_df['lost samples num'] = pd.DataFrame([l_err])
 
-    writer = pd.ExcelWriter(name)
+    writer = pd.ExcelWriter(name +'.xlsx')
     data_df.to_excel(writer, sheet_name='data')
     signal_df.to_excel(writer, sheet_name='signal')
     writer.save()
     print('__________data saved_________|', int(v_err), 'values errors |', int(l_err), 'lost samples |', len(signal_df),'samples collected |')
 
+def name(): # zrobić indeksowanie nazw!!!
+    return 'data\EKG_' + str(datetime.date.today()) + '_E' + str(int(l_err + v_err))
+
+def to_csv():
+    global signal_df
+    data_df = signal2data()
+    # data_df['value errors num'] = pd.DataFrame([v_err])
+    # data_df['lost samples num'] = pd.DataFrame([l_err])
+    data_df.to_csv(name() + '.csv')
+    print('__________data saved_________|', int(v_err), 'values errors |', int(l_err), 'lost samples |', len(signal_df),'samples collected |')
+
 def stop():
-    to_excel()
+    # to_excel()
+    to_csv()
     global one
     one = False
 
@@ -64,7 +75,7 @@ col_names = ['U', 't'] # podaj nazwy kolumn
 signal_df = pd.DataFrame(columns=col_names)
 v_err = 0 # liczba valuer errorów
 l_err = 0 # liczba zgubionych danych
-n = 200 # liczba próbek do zebrania
+n = 20 # liczba próbek do zebrania
 Fp = 100 # ustaw taką samą jak w mikrokontrolerze!
 T = 1000/Fp
 

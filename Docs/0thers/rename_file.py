@@ -26,11 +26,11 @@ def main():
         indexFile(fname)
 
 def indexFile(fname):
-    print '\nIndexing ' + fname
+    print('\nIndexing ' + fname)
     createEncodedTempFile(fname)
     postFileToTheIndex()
     os.remove(TMP_FILE_NAME)
-    print '\n-----------'
+    print('\n-----------')
 
 def indexDir(dir):
 
