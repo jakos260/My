@@ -1,3 +1,4 @@
+from operator import le
 import matplotlib.pyplot as plt
 from sklearn import datasets, linear_model
 import numpy as np
@@ -7,7 +8,9 @@ from colorama import Fore, Back, Style
 init()
 
 '''
+_______________________________________________________________________________________________________________________________
 FLUO
+_______________________________________________________________________________________________________________________________
 '''
 # df = pd.read_excel(r'FL.xlsx', sheet_name='Arkusz2')
 # print(df)
@@ -34,7 +37,9 @@ FLUO
 # print('współczynniki: \n', regr.coef_)
 
 '''
+_______________________________________________________________________________________________________________________________
 AFM
+_______________________________________________________________________________________________________________________________
 '''
 filename = 'kalibracja_lab_2a.txt'
 data = np.loadtxt(filename, delimiter='	', skiprows=1, dtype=str)
@@ -129,17 +134,37 @@ wykres 2 - siła
 wykres 3 - indentacja
 '''
 
-ind_start = 0
-for i in range(len(Z_m[start:stop])):
-    ind_start=i
-ind = Z_m[start:stop] - Z[start:stop]
+ind = np.zeros(len(Z))
+for i in range(len(Z)):
+    ind[i] = Z_m[i] - Z[i]
+    
+x = np.arange(len(ind))
 
-plt.figure(figsize=(10,7))
-plt.scatter(F[start:stop], ind, color='k', marker='.', label='indentacja')
-plt.xlabel('odległość [um]', fontsize = 12)
-plt.ylabel('siła [N]')
-# plt.xticks(np.arange(0, np.max(T), step=(np.max(T)/10)))
-# plt.yticks(np.arange(np.min(V), np.max(V), step = 0.5))
-plt.legend()
-plt.grid()
+# plt.figure(figsize=(10,7))
+# plt.scatter(F[start:stop], ind, color='k', marker='.', label='indentacja')
+# plt.xlabel('indentacja ΔZ [um]', fontsize = 12)
+# plt.ylabel('siła [N]')
+# # plt.xticks(np.arange(0, np.max(T), step=(np.max(T)/10)))
+# # plt.yticks(np.arange(np.min(V), np.max(V), step = 0.5))
+# # plt.legend()
+# plt.grid()
+# plt.show()
+
+fig, ax = plt.subplots(nrows=1, ncols=3)
+
+ax[0].scatter(-Z, F, color='k', marker='.', label='F')
+ax[0].scatter(-Z[start:stop], F[start:stop], color='r', marker='.', label='F[:]')
+ax[0].set_xlabel('Z [um]', fontsize = 12)
+ax[0].set_ylabel('siła [N]')
+
+ax[1].scatter(Z_m, F_m, color='k', marker='.', label='F')
+ax[1].scatter(Z_m[start:stop], F_m[start:stop], color='g', marker='.', label='F[:]')
+ax[1].set_xlabel('Z_m [um]', fontsize = 12)
+ax[1].set_ylabel('siła [N]')
+
+ax[2].scatter(x, ind, color='k', marker='.', label='F')
+ax[2].scatter(x[start:stop], ind[start:stop], color='b', marker='.', label='F[:]')
+ax[2].set_xlabel('indentacja ΔZ [um]', fontsize = 12)
+ax[2].set_ylabel('siła [N]')
+
 plt.show()

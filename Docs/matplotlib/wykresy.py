@@ -151,6 +151,8 @@ Parametry:
 
 # ax[1,1].plot(h, l, 'g')
 # ax[1,1].set_xticks(ticks)
+# ax[1,1].set_ylabel('label y [y_unit]')
+# ax[1,1].set_xlabel('label x [x_unit]')
 
 # fig.suptitle('kilka wykresów')
 
