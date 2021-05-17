@@ -1,7 +1,4 @@
-
 import serial
-import time
-import schedule
 from datetime import datetime
 import pandas as pd
 
@@ -41,6 +38,6 @@ def read_func(tekst):
     arduino.close()
     
 
-print(read_func(tekst=1))
+# print(read_func(tekst=1))
 
 
