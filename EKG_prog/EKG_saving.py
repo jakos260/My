@@ -4,52 +4,22 @@ import matplotlib.pyplot as plt
 import prints
 
 def main(df):
-    def filename(extension, index):
-        if index:
-            i = 1
-            while os.path.exists(f'data\EKG{i}_{str(datetime.date.today())}.{extension}'):
-                i += 1
-            return f'data\EKG{i}_{str(datetime.date.today())}.{extension}'
-        else:
-            return f'data\EKG_{str(datetime.date.today())}.{extension}' 
 
-    def to_csv():     
+    def filename(extension):
         prints.question('dodać index do zapisanej nazwy?')
         while True:
             x = input('y/n\n')
+
             if x == 'y':
-                name = filename('csv', index=True)            
-                df.to_csv(name)
-                prints.message(f'zapisano plik pod nazwą <{name}>\n')
-                break
+                i = 1
+                while os.path.exists(f'data\EKG{i}_{str(datetime.date.today())}.{extension}'): i += 1
+                return f'data\EKG{i}_{str(datetime.date.today())}.{extension}'
 
             elif x == 'n':
-                name = filename('csv', index=False)
-                df.to_csv(name)
-                prints.message(f'zapisano plik pod nazwą <{name}>\n')
-                break
+                return f'data\EKG_{str(datetime.date.today())}.{extension}'
 
             else:
-               prints.error('ehh... yes or no?\n')
-    
-    def to_excel():     
-        prints.question('\ndodać index do zapisanej nazwy?')
-        while True:
-            x = input('y/n\n')
-            if x == 'y':
-                name = filename('xlsx', index=True)            
-                df.to_csv(name)
-                prints.message(f'zapisano plik pod nazwą <{name}>\n')
-                break
-
-            elif x == 'n':
-                name = filename('xlsx', index=False)
-                df.to_csv(name)
-                prints.message(f'zapisano plik pod nazwą <{name}>\n')
-                break
-
-            else:
-               prints.error('ehh... yes or no?\n')
+               prints.error('yes or no\n')
 
     def plot():
         prints.question('chcesz może wykresik?')
@@ -76,12 +46,17 @@ def main(df):
     # ___________________main__________________________
     prints.question('1 - xlsx\n2 - csv \nmeh - nie zapisuje lol')
     while True:
+        name = 0
         x = input('jak chcesz zapisać swoje ekg?\n')
         if x == '1':
-            to_excel()
+            name = filename('xlsx')
+            df.to_xlsx(name)
+            prints.message(f'zapisano plik pod nazwą <{name}>\n')
             break
         elif x == '2':
-            to_csv()
+            name = filename('csv')
+            df.to_csv(name)
+            prints.message(f'zapisano plik pod nazwą <{name}>\n')
             break
         elif x == 'meh':
             prints.message('może innym razem...')
@@ -90,4 +65,4 @@ def main(df):
             prints.error('wybierz coś z listy opcji\n')
 
     plot()
-    prints.message('KONIEC, dzięki za dziś')
+    prints.message('KONIEC')
