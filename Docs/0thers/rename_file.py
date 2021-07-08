@@ -34,7 +34,7 @@ def indexFile(fname):
 
 def indexDir(dir):
 
-    print 'Indexing dir ' + dir
+    print('Indexing dir ' + dir)
 
     createIndexIfDoesntExist()
 
@@ -51,7 +51,7 @@ def indexDir(dir):
 
 def postFileToTheIndex():
     cmd = 'curl -X POST "{}/{}/{}" -d @'.format(HOST,INDEX,TYPE) + TMP_FILE_NAME
-    print cmd
+    print (cmd)
     os.system(cmd)
     
 
@@ -60,8 +60,8 @@ def createEncodedTempFile(fname):
 
     file64 = open(fname, "rb").read().encode("base64")
 
-    print 'writing JSON with base64 encoded file to temp file {}'.format(TMP_FILE_NAME)
-
+    print ('writing JSON with base64 encoded file to temp file {}'.format(TMP_FILE_NAME)
+)
     f = open(TMP_FILE_NAME, 'w')
     data = { 'file': file64, 'title': fname }
     json.dump(data, f) # dump json to tmp file
@@ -80,7 +80,7 @@ def createIndexIfDoesntExist():
         urllib2.urlopen(HeadRequest(HOST + '/' + INDEX + '/' + TYPE))
     except urllib2.HTTPError, e:
         if e.code == 404:
-            print 'Index doesnt exist, creating...'
+            print ('Index doesnt exist, creating...')
 
             os.system('curl -X PUT "{}/{}/{}/_mapping" -d'.format(HOST,INDEX,TYPE) + ''' '{
                   "attachment" : {
@@ -96,7 +96,7 @@ def createIndexIfDoesntExist():
                   }
                 }' ''')
         else:
-            print 'Failed to retrieve index with error code - %s.' % e.code
+            print ('Failed to retrieve index with error code - %s.' % e.code)
 
 # kick off the main function when script loads
 main()
