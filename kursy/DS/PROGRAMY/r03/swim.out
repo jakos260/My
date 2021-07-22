@@ -1,0 +1,20 @@
+Konstruowanie drzewa decyzyjnego Liczba elementów danych - 6
+[['brak', 'zimna', 'nie'], ['brak', 'ciep\xc5\x82a', 'nie'], ['bikini', 'zimna', 'nie'], ['bikini', 'ciep\xc5\x82a', 'nie'], ['kostium', 'zimna', 'nie'], ['kostium', 'ciep\xc5\x82a', 'tak']]
+
+***Drzewo decyzyjne***
+Korzeń
+├── [strój_kapielowy=brak]
+│   ├── [woda=ciepła]
+│   │   └── [pływamy=nie]
+│   └── [woda=zimna]
+│       └── [pływamy=nie]
+├── [strój_kapielowy=kostium]
+│   ├── [woda=ciepła]
+│   │   └── [pływamy=tak]
+│   └── [woda=zimna]
+│       └── [pływamy=nie]
+└── [strój_kapielowy=bikini]
+    ├── [woda=ciepła]
+    │   └── [pływamy=nie]
+    └── [woda=zimna]
+        └── [pływamy=nie]

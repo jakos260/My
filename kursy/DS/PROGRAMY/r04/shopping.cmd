@@ -1,0 +1,1 @@
+python .\random_forest.py shopping.csv 4 2 > shopping.out

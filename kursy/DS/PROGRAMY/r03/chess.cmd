@@ -1,0 +1,1 @@
+python .\construct_decision_tree.py chess.csv 1 > chess.out

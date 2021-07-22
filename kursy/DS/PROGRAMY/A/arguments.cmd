@@ -1,0 +1,1 @@
+python .\example16_arguments.py  2 service "argument ze spacjami"  test-aux

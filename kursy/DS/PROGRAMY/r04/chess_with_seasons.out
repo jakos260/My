@@ -1,0 +1,322 @@
+Mamy M=4 zmiennych służących do klasyfikowania cech. Zalecaną wartością m jest m=min(M,math.ceil(2*math.sqrt(M)))=min(M,math.ceil(2*math.sqrt(4)))=4.
+We are given the following features:
+[['zimno', 'silny', 'zima', 'nie'], ['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 'brak', 'wiosna', 'tak'], ['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak']]
+ When constructing a random decision tree as a part of a random forest, we will choose only a subset out of them in a random way with the replacement.
+
+*** Konstruowanie lasu losowego ***
+Konstruowanie lasu losowego składającego się z 4 losowych drzew decyzyjnych.
+
+Budowanie losowego drzewa decyzyjnego nr 0:
+Dane wejściowe  obejmują 10 cech, spośród których losujemy ze zwracaniem 10 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 'brak', 'wiosna', 'tak'], ['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 'brak', 'wiosna', 'tak'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr', 'pora_roku']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna pora_roku. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną pora_roku partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla pora_roku=lato: [['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['gor\xc4\x85co', 'silny', 'lato', 'tak']]
+Partycja dla pora_roku=jesień: [['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Partycja dla pora_roku=zima: [['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie']]
+Partycja dla pora_roku=wiosna: [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [pora_roku=lato] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['gor\xc4\x85co', 'silny', 'lato', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=lato].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość gorąco. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [pora_roku=jesień] do węzła [korzeń]. Ta gałąź klasyfikuje 1 atrybut(ów): [['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=jesień].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość gorąco. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [pora_roku=zima] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie']]
+Dodajemy węzły potomne do węzła [pora_roku=zima].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość zimno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [pora_roku=wiosna] do węzła [korzeń]. Ta gałąź klasyfikuje 5 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=wiosna].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [pora_roku=wiosna]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 'brak', 'wiosna', 'nie']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 1 atrybut(ów): [['gor\xc4\x85co', 'brak', 'wiosna', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość słaby. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [pora_roku=wiosna].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Budowanie losowego drzewa decyzyjnego nr 1:
+Dane wejściowe  obejmują 10 cech, spośród których losujemy ze zwracaniem 10 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['zimno', 'brak', 'wiosna', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'silny', 'zima', 'nie'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr', 'pora_roku']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna pora_roku. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną pora_roku partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla pora_roku=lato: [['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak']]
+Partycja dla pora_roku=jesień: [['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Partycja dla pora_roku=zima: [['zimno', 'silny', 'zima', 'nie']]
+Partycja dla pora_roku=wiosna: [['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['zimno', 'brak', 'wiosna', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [pora_roku=lato] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=lato].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość ciepło. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [pora_roku=jesień] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=jesień].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość gorąco. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [pora_roku=zima] do węzła [korzeń]. Ta gałąź klasyfikuje 1 atrybut(ów): [['zimno', 'silny', 'zima', 'nie']]
+Dodajemy węzły potomne do węzła [pora_roku=zima].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość zimno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [pora_roku=wiosna] do węzła [korzeń]. Ta gałąź klasyfikuje 5 atrybut(ów): [['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['zimno', 'brak', 'wiosna', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=wiosna].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [pora_roku=wiosna]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 2 atrybut(ów): [['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość słaby. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [pora_roku=wiosna].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Budowanie losowego drzewa decyzyjnego nr 2:
+Dane wejściowe  obejmują 10 cech, spośród których losujemy ze zwracaniem 10 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak'], ['zimno', 'silny', 'zima', 'nie'], ['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['zimno', 'brak', 'wiosna', 'tak'], ['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['zimno', 'brak', 'wiosna', 'tak'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr', 'pora_roku']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna pora_roku. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną pora_roku partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla pora_roku=lato: [['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak']]
+Partycja dla pora_roku=jesień: [['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak'], ['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie']]
+Partycja dla pora_roku=zima: [['zimno', 'silny', 'zima', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie']]
+Partycja dla pora_roku=wiosna: [['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [pora_roku=lato] do węzła [korzeń]. Ta gałąź klasyfikuje 3 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=lato].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [pora_roku=lato]. utworzono następujące partycje:
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 'silny', 'lato', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [pora_roku=lato]. Ta gałąź klasyfikuje 1 atrybut(ów): [['gor\xc4\x85co', 'silny', 'lato', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość silny. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [pora_roku=lato]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'lato', 'tak'], ['ciep\xc5\x82o', 'brak', 'lato', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [pora_roku=lato].
+
+Dodajemy węzeł potomny [pora_roku=jesień] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak'], ['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie']]
+Dodajemy węzły potomne do węzła [pora_roku=jesień].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną wiatr partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [pora_roku=jesień]. utworzono następujące partycje:
+Partycja dla wiatr=brak: [['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak']]
+Partycja dla wiatr=silny: [['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [wiatr=brak] do węzła [pora_roku=jesień]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=brak].
+Zmienne, które obecnie sa dostępne, to ['temperatura']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość ciepło. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [wiatr=silny] do węzła [pora_roku=jesień]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie']]
+Dodajemy węzły potomne do węzła [wiatr=silny].
+Zmienne, które obecnie sa dostępne, to ['temperatura']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość ciepło. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodaliśmy wszystkie węzły potomne do węzła [pora_roku=jesień].
+
+Dodajemy węzeł potomny [pora_roku=zima] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'silny', 'zima', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie']]
+Dodajemy węzły potomne do węzła [pora_roku=zima].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość zimno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [pora_roku=wiosna] do węzła [korzeń]. Ta gałąź klasyfikuje 3 atrybut(ów): [['gor\xc4\x85co', 'brak', 'wiosna', 'nie'], ['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=wiosna].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [pora_roku=wiosna]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Partycja dla temperatura=gorąco: [['gor\xc4\x85co', 'brak', 'wiosna', 'nie']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 2 atrybut(ów): [['zimno', 'brak', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=gorąco] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 1 atrybut(ów): [['gor\xc4\x85co', 'brak', 'wiosna', 'nie']]
+Dodajemy węzły potomne do węzła [temperatura=gorąco].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodaliśmy wszystkie węzły potomne do węzła [pora_roku=wiosna].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Budowanie losowego drzewa decyzyjnego nr 3:
+Dane wejściowe  obejmują 10 cech, spośród których losujemy ze zwracaniem 10 w celu zbudwania niniejszego losowego drzewa decyzyjnego: 
+[['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['gor\xc4\x85co', 'silny', 'lato', 'tak'], ['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak'], ['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['zimno', 's\xc5\x82aby', 'zima', 'nie']]
+Rozpoczynamy budowę od korzenia jako pierwszego węzła w drzewie.
+Dodajemy węzły potomne do węzła [korzeń].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr', 'pora_roku']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna pora_roku. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną pora_roku partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [korzeń]. utworzono następujące partycje:
+Partycja dla pora_roku=lato: [['gor\xc4\x85co', 'silny', 'lato', 'tak']]
+Partycja dla pora_roku=jesień: [['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Partycja dla pora_roku=zima: [['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie']]
+Partycja dla pora_roku=wiosna: [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [pora_roku=lato] do węzła [korzeń]. Ta gałąź klasyfikuje 1 atrybut(ów): [['gor\xc4\x85co', 'silny', 'lato', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=lato].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość gorąco. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [pora_roku=jesień] do węzła [korzeń]. Ta gałąź klasyfikuje 4 atrybut(ów): [['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=jesień].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną wiatr partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [pora_roku=jesień]. utworzono następujące partycje:
+Partycja dla wiatr=brak: [['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak']]
+Partycja dla wiatr=silny: [['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie']]
+Partycja dla wiatr=słaby: [['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [wiatr=brak] do węzła [pora_roku=jesień]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'brak', 'jesie\xc5\x84', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=brak].
+Zmienne, które obecnie sa dostępne, to ['temperatura']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość ciepło. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [wiatr=silny] do węzła [pora_roku=jesień]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 'silny', 'jesie\xc5\x84', 'nie']]
+Dodajemy węzły potomne do węzła [wiatr=silny].
+Zmienne, które obecnie sa dostępne, to ['temperatura']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość ciepło. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [wiatr=słaby] do węzła [pora_roku=jesień]. Ta gałąź klasyfikuje 2 atrybut(ów): [['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak'], ['gor\xc4\x85co', 's\xc5\x82aby', 'jesie\xc5\x84', 'tak']]
+Dodajemy węzły potomne do węzła [wiatr=słaby].
+Zmienne, które obecnie sa dostępne, to ['temperatura']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość gorąco. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [pora_roku=jesień].
+
+Dodajemy węzeł potomny [pora_roku=zima] do węzła [korzeń]. Ta gałąź klasyfikuje 3 atrybut(ów): [['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie'], ['zimno', 's\xc5\x82aby', 'zima', 'nie']]
+Dodajemy węzły potomne do węzła [pora_roku=zima].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej temperatura wszystkie dostępne atrybuty mają tę samą wartość zimno. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=nie].
+
+Dodajemy węzeł potomny [pora_roku=wiosna] do węzła [korzeń]. Ta gałąź klasyfikuje 2 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak'], ['zimno', 'brak', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [pora_roku=wiosna].
+Zmienne, które obecnie sa dostępne, to ['temperatura', 'wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna temperatura. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Wykorzystując zmienną temperatura partycjonujemy dane w bieżącym węźle,  gdzie każda partycja s\danych stanowi jedną z nowych gałęzi wychodzących z bieżącego węzła [pora_roku=wiosna]. utworzono następujące partycje:
+Partycja dla temperatura=zimno: [['zimno', 'brak', 'wiosna', 'tak']]
+Partycja dla temperatura=ciepło: [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Teraz. mając partycje, tworzymy gałęzie i węzły potomne.
+
+Dodajemy węzeł potomny [temperatura=zimno] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 1 atrybut(ów): [['zimno', 'brak', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=zimno].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość brak. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodajemy węzeł potomny [temperatura=ciepło] do węzła [pora_roku=wiosna]. Ta gałąź klasyfikuje 1 atrybut(ów): [['ciep\xc5\x82o', 's\xc5\x82aby', 'wiosna', 'tak']]
+Dodajemy węzły potomne do węzła [temperatura=ciepło].
+Zmienne, które obecnie sa dostępne, to ['wiatr']. Ponieważ jest ich mniej niż wszkazuje parametr m=4, uwzględniamy je wszystkie. Wśród dostepnych zmiennych największy zysk informacyjny daje zmienna wiatr. Wykorzystujemy ją więc jako kryterium podziału.Jednocześnie usuwamy ją z listy dostępnych zmiennych dla potomków bieżącego węzła. Dla wybranej zmiennej wiatr wszystkie dostępne atrybuty mają tę samą wartość słaby. Dołączamy więc liść do gałęzi. Dodajemy liść [gramy=tak].
+
+Dodaliśmy wszystkie węzły potomne do węzła [pora_roku=wiosna].
+
+Dodaliśmy wszystkie węzły potomne do węzła [korzeń].
+
+Zakończono konstruowanie lasu losowego składającego się z 4 losowych drzew decyzyjnych.
+
+*** Graf lasu losowego ***
+
+Drzewo nr 0:
+Korzeń
+├── [pora_roku=lato]
+│   └── [gramy=tak]
+├── [pora_roku=jesień]
+│   └── [gramy=tak]
+├── [pora_roku=zima]
+│   └── [gramy=nie]
+└── [pora_roku=wiosna]
+    ├── [temperatura=zimno]
+    │   └── [gramy=tak]
+    ├── [temperatura=gorąco]
+    │   └── [gramy=nie]
+    └── [temperatura=ciepło]
+        └── [gramy=tak]
+
+Drzewo nr 1:
+Korzeń
+├── [pora_roku=lato]
+│   └── [gramy=tak]
+├── [pora_roku=jesień]
+│   └── [gramy=tak]
+├── [pora_roku=zima]
+│   └── [gramy=nie]
+└── [pora_roku=wiosna]
+    ├── [temperatura=zimno]
+    │   └── [gramy=tak]
+    ├── [temperatura=gorąco]
+    │   └── [gramy=nie]
+    └── [temperatura=ciepło]
+        └── [gramy=tak]
+
+Drzewo nr 2:
+Korzeń
+├── [pora_roku=lato]
+│   ├── [temperatura=gorąco]
+│   │   └── [gramy=tak]
+│   └── [temperatura=ciepło]
+│       └── [gramy=tak]
+├── [pora_roku=jesień]
+│   ├── [wiatr=brak]
+│   │   └── [gramy=tak]
+│   └── [wiatr=silny]
+│       └── [gramy=nie]
+├── [pora_roku=zima]
+│   └── [gramy=nie]
+└── [pora_roku=wiosna]
+    ├── [temperatura=zimno]
+    │   └── [gramy=tak]
+    └── [temperatura=gorąco]
+        └── [gramy=nie]
+
+Drzewo nr 3:
+Korzeń
+├── [pora_roku=lato]
+│   └── [gramy=tak]
+├── [pora_roku=jesień]
+│   ├── [wiatr=brak]
+│   │   └── [gramy=tak]
+│   ├── [wiatr=silny]
+│   │   └── [gramy=nie]
+│   └── [wiatr=słaby]
+│       └── [gramy=tak]
+├── [pora_roku=zima]
+│   └── [gramy=nie]
+└── [pora_roku=wiosna]
+    ├── [temperatura=zimno]
+    │   └── [gramy=tak]
+    └── [temperatura=ciepło]
+        └── [gramy=tak]
+
+Liczba drzew w lesie losowym: 4.
+Makymalna liczba zmiennych uwzglednianych w węźle: 4.
+
+ *** Klasyfikacja ***
+
+
+Cecha: ['ciep\xc5\x82o', 'silny', 'wiosna', '?']
+Drzewo nr 0 głosuje na klasę 'tak'
+Drzewo nr 1 głosuje na klasę 'tak'
+Drzewo nr 2 wstrzymuje się od głosu
+Drzewo nr 3 głosuje na klasę 'tak'
+Klasa o największej liczbie głosów to 'tak',
+zatem cecha ['ciep\xc5\x82o', 'silny', 'wiosna', '?'] zostaje zaliczona przez las losowy do klasy 'tak'.
