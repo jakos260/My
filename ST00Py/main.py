@@ -12,20 +12,20 @@ def f(y1):
         z = norm*y1*100
     else:       
         z = np.zeros((11, 7))
-        z[2,2:5] = 0.5
-        z[3,2:5] = 0.5
-        z[4,2:5] = 0.5
-        z[5,2:5] = 0.5
-        z[6,2:5] = 0.5
-        z[7,2:6] = 0.5
-        z[8,2:6] = 0.5
-        z[9,3:6] = 0.5
+        z[2,2:5] = 0.1
+        z[3,2:5] = 0.1
+        z[4,2:5] = 0.1
+        z[5,2:5] = 0.1
+        z[6,2:5] = 0.1
+        z[7,2:6] = 0.1
+        z[8,2:6] = 0.1
+        z[9,3:6] = 0.1
         z[2:3,2:5] = y1
         z[1,3:4] = y1
     # print(z)
     return z
 
-arduino = serial.Serial(port='COM6', baudrate=57600, timeout=1)
+arduino = serial.Serial(port='COM3', baudrate=57600, timeout=1)
 if arduino.is_open==True:
 	print('\n_______________________________\n')
 	print(arduino, "\n")
