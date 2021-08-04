@@ -1,3 +1,3 @@
 # LAB
-- projekty uczelniane
+- zadania z laboratoriów uczelnianych
 
