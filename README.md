@@ -1,5 +1,5 @@
 # Moje repozytorium
-Zbiór moich projektów, ćwiczenia uczelniane , kursy i docsy.
+Moje projekty, ćwiczenia uczelniane , kursy i docsy.
 
 # Podstawowe komendy:
 
