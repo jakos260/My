@@ -11,7 +11,7 @@ Zbiór moich projektów, ćwiczenia uczelniane , kursy i docsy.
 > python -m venv My
 > >.\Scripts\activate
 
-**Requirements file name** : rq.txt
+## **Requirements file name** : rq.txt
 
 > pip install -r rq.txt
 > >
