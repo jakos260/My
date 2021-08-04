@@ -1,5 +1,7 @@
 # Moje repozytorium
-zbiór tego co robię gdy mi się nudzi
+Zbiór moich projektów, ćwiczenia uczelniane , kursy i docsy.
+
+# Podstawowe komendy:
 
 ## Clone repository on your local machine:
 
